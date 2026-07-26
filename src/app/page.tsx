@@ -114,7 +114,6 @@ export default function Home() {
   // ── State ──
   const [exams, setExams]           = useState<Exam[]>([]);
   const [thesisPoints, setThesis]   = useState(0);
-  const [committeePoints, setComm]  = useState(0);
   const [worstCfu, setWorstCfu]     = useState(0);
   const [bonusRules, setBonusRules] = useState<BonusRule[]>([]);
   const [showImport, setShowImport] = useState(false);
@@ -162,7 +161,6 @@ export default function Home() {
         const s = await sr.json();
         if (s) {
           setThesis(s.thesisPoints || 0);
-          setComm(s.committeePoints || 0);
           setWorstCfu(s.worstCfu || 0);
         }
       }
@@ -170,7 +168,6 @@ export default function Home() {
       const e = localStorage.getItem('gradly_exams');
       if (e) setExams(JSON.parse(e));
       setThesis(parseInt(localStorage.getItem('gradly_thesis') || '0'));
-      setComm(parseInt(localStorage.getItem('gradly_committee') || '0'));
       setWorstCfu(parseInt(localStorage.getItem('gradly_worst_cfu') || '0'));
       
       const b = localStorage.getItem('gradly_bonus_rules');
@@ -189,16 +186,15 @@ export default function Home() {
       fetch('/api/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ thesisPoints, committeePoints, worstCfu }),
+        body: JSON.stringify({ thesisPoints, worstCfu }),
       }).catch(() => {
         localStorage.setItem('gradly_thesis',     thesisPoints.toString());
-        localStorage.setItem('gradly_committee',  committeePoints.toString());
         localStorage.setItem('gradly_worst_cfu',  worstCfu.toString());
         localStorage.setItem('gradly_bonus_rules', JSON.stringify(bonusRules));
       });
     }, 600);
     return () => clearTimeout(id);
-  }, [thesisPoints, committeePoints, worstCfu, bonusRules, dbReady]);
+  }, [thesisPoints, worstCfu, bonusRules, dbReady]);
 
   // ── Persist exams to local storage ──
   useEffect(() => {
@@ -290,8 +286,7 @@ export default function Home() {
   let lodeFinale = false;
 
   if (hasGrade) {
-    const finalBonus = Math.max(committeePoints, computedBonus);
-    let totale = partenza + thesisPoints + finalBonus;
+    let totale = partenza + thesisPoints + computedBonus;
     finaleCapped = Math.min(Math.round(totale), 110);
     lodeFinale = totale >= 111;
   }
@@ -353,7 +348,7 @@ export default function Home() {
             lode={lodeFinale}
             partenza={partenza}
             thesisPoints={thesisPoints}
-            committeePoints={Math.max(committeePoints, computedBonus)}
+            committeePoints={computedBonus}
           />
 
           {/* Stats row */}
@@ -637,16 +632,6 @@ export default function Home() {
                     onChange={setThesis}
                     color="#e94057"
                   />
-                  
-                  <div className="mt-8 border-t border-black/5 dark:border-white/5 pt-6">
-                    <PointsSlider
-                      label="Bonus Extra (Manuale)"
-                      desc="Eventuali punti fissi extra"
-                      value={committeePoints} min={0} max={7}
-                      onChange={setComm}
-                      color="#8a2387"
-                    />
-                  </div>
                 </div>
                 
                 {/* Dynamic Rules for Average */}
