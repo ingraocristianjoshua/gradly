@@ -621,7 +621,7 @@ export default function Home() {
              <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi e Impostazioni</h2>
            </div>
            
-           <div className="flex flex-col lg:flex-row gap-8 items-stretch w-full">
+           <div className="flex flex-col md:flex-row gap-8 items-stretch w-full">
              {/* Left side: Points & Bonus Rules */}
              <div className="flex-1 flex flex-col gap-8 max-w-[400px]">
                 {/* Thesis Slider */}
@@ -679,10 +679,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-           </div>
-           
-           {/* Right side: Worst CFU Exclusion & Manual Exclusion */}
-           <div className="flex flex-col gap-6 lg:w-[320px] lg:border-l border-t lg:border-t-0 border-black/5 dark:border-white/5 pt-6 lg:pt-0 lg:pl-8">
+           <div className="flex flex-col gap-6 md:w-[320px] md:border-l border-t md:border-t-0 border-black/5 dark:border-white/5 pt-6 md:pt-0 md:pl-8">
               <div>
                 <PointsSlider
                   label="Scarta peggiori (CFU)"
@@ -728,7 +725,6 @@ export default function Home() {
                   </button>
               </div>
            </div>
-        </div>
         </div>
         </div>
       </main>
