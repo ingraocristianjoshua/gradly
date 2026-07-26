@@ -726,53 +726,55 @@ export default function Home() {
                   <div className="flex justify-between text-xs text-gray-300 font-medium"><span>0</span><span>5</span></div>
                 </div>
                 
-                {/* Dynamic Rules for Average */}
-                <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/50 dark:border-white/5">
-                  <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-1">Regole Bonus Media</h3>
-                  <p className="text-[11px] text-gray-500 mb-4">Aggiunge in automatico punti extra in base alla media ponderata.</p>
-                  
-                  {/* Add Rule Form */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-xs font-semibold text-gray-500">Da</span>
-                    <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMin} onChange={e => setRuleMin(e.target.value)} />
-                    <span className="text-xs font-semibold text-gray-500">A</span>
-                    <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMax} onChange={e => setRuleMax(e.target.value)} />
-                    <span className="text-xs font-semibold text-gray-500">Pt:</span>
-                    <input type="number" className="app-input w-12 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={rulePts} onChange={e => setRulePts(e.target.value)} />
-                    <button 
-                      onClick={() => {
-                        if(ruleMin && ruleMax && rulePts) {
-                          setBonusRules([...bonusRules, { id: crypto.randomUUID(), min: parseFloat(ruleMin), max: parseFloat(ruleMax), points: parseFloat(rulePts) }]);
-                        }
-                      }}
-                      className="ml-auto bg-[#8a2387] hover:bg-[#e94057] transition-colors text-white text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center shadow-sm"
-                    >+</button>
-                  </div>
-                  
-                  {/* Rules List */}
-                  <div className="flex flex-col gap-2 max-h-[120px] overflow-y-auto pr-1">
-                    {bonusRules.length === 0 && <div className="text-xs text-gray-400 italic text-center py-2">Nessuna regola definita</div>}
-                    {bonusRules.map(r => {
-                      const isBase110 = r.max > 31;
-                      const valToCompare = isBase110 ? partenza : ponderata;
-                      const isActive = valToCompare >= r.min && valToCompare <= r.max;
-                      return (
-                        <div key={r.id} className={`flex items-center justify-between p-2 rounded-xl border text-sm transition-all ${isActive ? 'bg-[#8a2387]/10 border-[#8a2387]/30' : 'bg-black/5 dark:bg-white/5 border-transparent'}`}>
-                          <div className="flex items-center gap-2">
-                            {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#e94057] animate-pulse"></div>}
-                            <span className={`font-semibold ${isActive ? 'text-[#e94057]' : 'text-gray-600 dark:text-gray-300'}`}>{r.min} — {r.max}</span>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <span className="font-bold text-[#8a2387]">+{r.points} pt</span>
-                            <button onClick={() => setBonusRules(bonusRules.filter(br => br.id !== r.id))} className="text-gray-400 hover:text-red-500">✕</button>
-                          </div>
+              </div>
+           <div className="flex flex-col gap-6 md:w-[340px] md:border-l border-t md:border-t-0 border-black/5 dark:border-white/5 pt-6 md:pt-0 md:pl-8">
+              
+              {/* Dynamic Rules for Average */}
+              <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/50 dark:border-white/5">
+                <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-1">Regole Bonus Media</h3>
+                <p className="text-[11px] text-gray-500 mb-4">Aggiunge in automatico punti extra in base alla media ponderata.</p>
+                
+                {/* Add Rule Form */}
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xs font-semibold text-gray-500">Da</span>
+                  <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMin} onChange={e => setRuleMin(e.target.value)} />
+                  <span className="text-xs font-semibold text-gray-500">A</span>
+                  <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMax} onChange={e => setRuleMax(e.target.value)} />
+                  <span className="text-xs font-semibold text-gray-500">Pt:</span>
+                  <input type="number" className="app-input w-12 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={rulePts} onChange={e => setRulePts(e.target.value)} />
+                  <button 
+                    onClick={() => {
+                      if(ruleMin && ruleMax && rulePts) {
+                        setBonusRules([...bonusRules, { id: crypto.randomUUID(), min: parseFloat(ruleMin), max: parseFloat(ruleMax), points: parseFloat(rulePts) }]);
+                      }
+                    }}
+                    className="ml-auto bg-[#8a2387] hover:bg-[#e94057] transition-colors text-white text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center shadow-sm"
+                  >+</button>
+                </div>
+                
+                {/* Rules List */}
+                <div className="flex flex-col gap-2 max-h-[120px] overflow-y-auto pr-1">
+                  {bonusRules.length === 0 && <div className="text-xs text-gray-400 italic text-center py-2">Nessuna regola definita</div>}
+                  {bonusRules.map(r => {
+                    const isBase110 = r.max > 31;
+                    const valToCompare = isBase110 ? partenza : ponderata;
+                    const isActive = valToCompare >= r.min && valToCompare <= r.max;
+                    return (
+                      <div key={r.id} className={`flex items-center justify-between p-2 rounded-xl border text-sm transition-all ${isActive ? 'bg-[#8a2387]/10 border-[#8a2387]/30' : 'bg-black/5 dark:bg-white/5 border-transparent'}`}>
+                        <div className="flex items-center gap-2">
+                          {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#e94057] animate-pulse"></div>}
+                          <span className={`font-semibold ${isActive ? 'text-[#e94057]' : 'text-gray-600 dark:text-gray-300'}`}>{r.min} — {r.max}</span>
                         </div>
-                      )
-                    })}
-                  </div>
+                        <div className="flex items-center gap-3">
+                          <span className="font-bold text-[#8a2387]">+{r.points} pt</span>
+                          <button onClick={() => setBonusRules(bonusRules.filter(br => br.id !== r.id))} className="text-gray-400 hover:text-red-500">✕</button>
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
-           <div className="flex flex-col gap-6 md:w-[320px] md:border-l border-t md:border-t-0 border-black/5 dark:border-white/5 pt-6 md:pt-0 md:pl-8">
+
               <div>
                 <PointsSlider
                   label="Limite CFU scartabili"
