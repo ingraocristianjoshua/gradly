@@ -694,34 +694,22 @@ export default function Home() {
                 </div>
 
                 {/* Punti Lode */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">Punti per Lode</p>
-                      <p className="text-xs text-gray-400">Punti extra per ogni 30L (default 0.5)</p>
-                    </div>
-                    <span className="text-white text-sm font-bold py-1 px-3 rounded-full min-w-[48px] text-center shadow" style={{ background: '#f59e0b' }}>
-                      +{lodeBonus}
-                    </span>
-                  </div>
-                  <input type="range" min="0" max="2" step="0.25" value={lodeBonus} onChange={(e) => setLodeBonus(parseFloat(e.target.value))} style={{ '--slider-color': '#f59e0b' } as React.CSSProperties} className="w-full cursor-pointer my-4 custom-slider" />
-                  <div className="flex justify-between text-xs text-gray-300 font-medium"><span>0</span><span>2</span></div>
-                </div>
+                <PointsSlider
+                  label="Punti per Lode"
+                  desc="Punti extra per ogni 30L (default 0.5)"
+                  value={lodeBonus} min={0} max={2} step={0.25}
+                  onChange={setLodeBonus}
+                  color="#f59e0b"
+                />
 
                 {/* Laurea in Corso */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">Punti in corso</p>
-                      <p className="text-xs text-gray-400">Punti se ci si laurea in tempo</p>
-                    </div>
-                    <span className="text-white text-sm font-bold py-1 px-3 rounded-full min-w-[48px] text-center shadow" style={{ background: '#34c759' }}>
-                      +{onTimeBonus}
-                    </span>
-                  </div>
-                  <input type="range" min="0" max="5" step="0.5" value={onTimeBonus} onChange={(e) => setOnTimeBonus(parseFloat(e.target.value))} style={{ '--slider-color': '#34c759' } as React.CSSProperties} className="w-full cursor-pointer my-4 custom-slider" />
-                  <div className="flex justify-between text-xs text-gray-300 font-medium"><span>0</span><span>5</span></div>
-                </div>
+                <PointsSlider
+                  label="Punti in corso"
+                  desc="Punti extra se in corso"
+                  value={onTimeBonus} min={0} max={5} step={0.5}
+                  onChange={setOnTimeBonus}
+                  color="#34c759"
+                />
                 
               </div>
            <div className="flex flex-col gap-6 md:w-[340px] md:border-l border-t md:border-t-0 border-black/5 dark:border-white/5 pt-6 md:pt-0 md:pl-8">
@@ -732,21 +720,27 @@ export default function Home() {
                 <p className="text-[11px] text-gray-500 mb-4">Aggiunge in automatico punti extra in base alla media ponderata.</p>
                 
                 {/* Add Rule Form */}
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xs font-semibold text-gray-500">Da</span>
-                  <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMin} onChange={e => setRuleMin(e.target.value)} />
-                  <span className="text-xs font-semibold text-gray-500">A</span>
-                  <input type="number" step="0.5" className="app-input w-16 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMax} onChange={e => setRuleMax(e.target.value)} />
-                  <span className="text-xs font-semibold text-gray-500">Pt:</span>
-                  <input type="number" className="app-input w-12 text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={rulePts} onChange={e => setRulePts(e.target.value)} />
+                <div className="flex flex-wrap items-center gap-3 mb-4">
+                  <div className="flex items-center gap-2 flex-1 min-w-[80px]">
+                    <span className="text-xs font-semibold text-gray-500">Da</span>
+                    <input type="number" step="0.5" className="app-input w-full text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMin} onChange={e => setRuleMin(e.target.value)} />
+                  </div>
+                  <div className="flex items-center gap-2 flex-1 min-w-[80px]">
+                    <span className="text-xs font-semibold text-gray-500">A</span>
+                    <input type="number" step="0.5" className="app-input w-full text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={ruleMax} onChange={e => setRuleMax(e.target.value)} />
+                  </div>
+                  <div className="flex items-center gap-2 flex-1 min-w-[80px]">
+                    <span className="text-xs font-semibold text-gray-500">Pt:</span>
+                    <input type="number" className="app-input w-full text-center text-sm py-1.5 px-2 bg-white/70 dark:bg-black/40" value={rulePts} onChange={e => setRulePts(e.target.value)} />
+                  </div>
                   <button 
                     onClick={() => {
                       if(ruleMin && ruleMax && rulePts) {
                         setBonusRules([...bonusRules, { id: crypto.randomUUID(), min: parseFloat(ruleMin), max: parseFloat(ruleMax), points: parseFloat(rulePts) }]);
                       }
                     }}
-                    className="ml-auto bg-[#8a2387] hover:bg-[#e94057] transition-colors text-white text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center shadow-sm"
-                  >+</button>
+                    className="flex-shrink-0 bg-[#8a2387] hover:bg-[#e94057] transition-colors text-white text-xs font-bold px-4 h-[34px] rounded-lg shadow-sm"
+                  >Aggiungi</button>
                 </div>
                 
                 {/* Rules List */}
@@ -808,14 +802,7 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Action for Manual Exclusion Popup */}
-              <div className="mt-auto flex flex-col items-start gap-2 pt-4">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">Esclusione Manuale</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Escludi intere materie dalla media.</p>
-                  <button onClick={() => setShowExclusionModal(true)} className="mt-1 px-4 py-2.5 bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 rounded-xl text-sm font-semibold transition-all text-gray-700 dark:text-gray-200 shadow-sm w-full">
-                    Gestisci materie...
-                  </button>
-              </div>
+
            </div>
         </div>
         </div>

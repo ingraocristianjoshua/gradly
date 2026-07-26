@@ -6,11 +6,12 @@ interface Props {
   value: number;
   min: number;
   max: number;
+  step?: number;
   onChange: (v: number) => void;
   color: string;
 }
 
-export default function PointsSlider({ label, desc, value, min, max, onChange, color }: Props) {
+export default function PointsSlider({ label, desc, value, min, max, step = 1, onChange, color }: Props) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -29,8 +30,9 @@ export default function PointsSlider({ label, desc, value, min, max, onChange, c
         type="range"
         min={min}
         max={max}
+        step={step}
         value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
         style={{ '--slider-color': color } as React.CSSProperties}
         className="w-full cursor-pointer my-4 custom-slider"
         aria-label={label}
