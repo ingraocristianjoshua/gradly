@@ -11,14 +11,15 @@
 }
 
 .bg-animated-gradient {
-  background: linear-gradient(-45deg, #f5f5f7, #fdf6fa, #fdf4f4, #f5f5f7);
-  background-size: 300% 300%;
-  animation: moving-gradient 18s ease infinite;
+  background: linear-gradient(-45deg, #fce4ec, #f3e5f5, #e8eaf6, #fff3e0, #fce4ec);
+  background-size: 400% 400%;
+  animation: moving-gradient 12s ease infinite;
 }
 
 .dark .bg-animated-gradient {
-  background: linear-gradient(-45deg, #0d0d10, #1b1118, #181015, #0d0d10);
-  background-size: 300% 300%;
+  background: linear-gradient(-45deg, #1f1122, #181124, #121524, #221511, #1f1122);
+  background-size: 400% 400%;
+  animation: moving-gradient 18s ease infinite;
 }
 
 /* ── Component styles ── */
