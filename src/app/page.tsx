@@ -358,22 +358,8 @@ export default function Home() {
   return (
     <>
       <Navbar onImport={() => setShowImport(true)} />
-      {/* ── Animated Mesh Background ── */}
-      <div className="fixed inset-0 -z-20 bg-[#f8f9fa] dark:bg-[#09090b] transition-colors duration-500" />
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-30 dark:opacity-15 animate-blob"
-          style={{ background: 'linear-gradient(to right, #8a2387, #e94057)' }}
-        />
-        <div
-          className="absolute top-[20%] right-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-30 dark:opacity-15 animate-blob animation-delay-2000"
-          style={{ background: 'linear-gradient(to right, #f27121, #e94057)' }}
-        />
-        <div
-          className="absolute bottom-[-20%] left-[10%] w-[70vw] h-[70vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-30 dark:opacity-15 animate-blob animation-delay-4000"
-          style={{ background: 'linear-gradient(to right, #8a2387, #818cf8)' }}
-        />
-      </div>
+      {/* ── Animated Clean Background ── */}
+      <div className="fixed inset-0 -z-20 bg-animated-gradient transition-colors duration-500" />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-14">
 
@@ -439,7 +425,7 @@ export default function Home() {
               </div>
               <form onSubmit={saveExam} className="flex flex-col gap-4">
                 {/* Settore 1: Nome */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/40 dark:bg-white/5 p-6 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     1. Nome materia
                   </label>
@@ -482,7 +468,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 2: CFU */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/40 dark:bg-white/5 p-6 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     2. Crediti (CFU)
                   </label>
@@ -499,7 +485,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 3: Voto */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/40 dark:bg-white/5 p-6 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     3. Voto in 30esimi
                   </label>
@@ -561,7 +547,7 @@ export default function Home() {
                       key={exam.id}
                       onClick={() => startEditing(exam)}
                       className="flex items-center gap-3 p-4 rounded-[24px]
-                        bg-white/70 dark:bg-white/5 shadow-sm
+                        bg-white/40 dark:bg-white/5 shadow-sm
                         border border-black/5 dark:border-white/5
                         hover:bg-white dark:hover:bg-white/10 hover:shadow-md
                         transition-all duration-300 group cursor-pointer"
