@@ -426,7 +426,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Left: form */}
             <div className="lg:col-span-6 flex flex-col">
-              <div className="glass rounded-3xl p-6 sm:p-8 h-full">
+              <div className="glass rounded-[36px] p-6 sm:p-8 h-full">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                   {editingId ? 'Modifica esame' : 'Aggiungi esame'}
@@ -439,7 +439,7 @@ export default function Home() {
               </div>
               <form onSubmit={saveExam} className="flex flex-col gap-4">
                 {/* Settore 1: Nome */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     1. Nome materia
                   </label>
@@ -482,7 +482,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 2: CFU */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     2. Crediti (CFU)
                   </label>
@@ -499,7 +499,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 3: Voto */}
-                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[28px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     3. Voto in 30esimi
                   </label>
@@ -541,7 +541,7 @@ export default function Home() {
           {/* Right: exam list */}
           <div className="lg:col-span-6 flex flex-col">
             {exams.length > 0 ? (
-              <div className="glass rounded-3xl p-6 sm:p-8 h-full flex flex-col">
+              <div className="glass rounded-[36px] p-6 sm:p-8 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                     Esami{' '}
@@ -560,7 +560,7 @@ export default function Home() {
                     <div
                       key={exam.id}
                       onClick={() => startEditing(exam)}
-                      className="flex items-center gap-3 p-4 rounded-[20px]
+                      className="flex items-center gap-3 p-4 rounded-[24px]
                         bg-white/70 dark:bg-white/5 shadow-sm
                         border border-black/5 dark:border-white/5
                         hover:bg-white dark:hover:bg-white/10 hover:shadow-md
@@ -614,7 +614,7 @@ export default function Home() {
                         <div
                           key={exam.id}
                           onClick={() => startEditing(exam)}
-                          className="flex items-center gap-3 p-4 rounded-[20px]
+                          className="flex items-center gap-3 p-4 rounded-[24px]
                             bg-white/40 dark:bg-black/10
                             border border-black/5 dark:border-white/5
                             opacity-60 hover:opacity-100 hover:bg-white/60 dark:hover:bg-white/10
@@ -652,7 +652,7 @@ export default function Home() {
               </div>
             ) : (
               /* Empty state */
-              <div className="glass rounded-3xl p-10 flex flex-col items-center gap-5 text-center h-full justify-center">
+              <div className="glass rounded-[36px] p-10 flex flex-col items-center gap-5 text-center h-full justify-center">
                 <div className="text-6xl animate-bounce">🎓</div>
                 <div>
                   <p className="font-bold text-gray-800 dark:text-gray-200 text-lg">Nessun esame ancora</p>
@@ -673,7 +673,7 @@ export default function Home() {
         </div>
 
         {/* BOTTOM WIDE BLOCK: Settings & Bonus */}
-        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 w-full animate-fade-in">
+        <div className="glass rounded-[36px] p-6 sm:p-8 flex flex-col gap-6 w-full animate-fade-in">
            <div className="flex items-center gap-3">
              <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi</h2>
            </div>
