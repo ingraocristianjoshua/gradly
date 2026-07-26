@@ -241,16 +241,20 @@ export default function Home() {
   useEffect(() => {
     if (!dbReady) return;
     const id = setTimeout(() => {
+      // Always save everything to localStorage
+      localStorage.setItem('gradly_thesis',     thesisPoints.toString());
+      localStorage.setItem('gradly_worst_cfu',  worstCfu.toString());
+      localStorage.setItem('gradly_lode_bonus', lodeBonus.toString());
+      localStorage.setItem('gradly_on_time_bonus', onTimeBonus.toString());
+      localStorage.setItem('gradly_bonus_rules', JSON.stringify(bonusRules));
+      
+      // Optionally sync supported fields to DB
       fetch('/api/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ thesisPoints, worstCfu }),
       }).catch(() => {
-        localStorage.setItem('gradly_thesis',     thesisPoints.toString());
-        localStorage.setItem('gradly_worst_cfu',  worstCfu.toString());
-        localStorage.setItem('gradly_lode_bonus', lodeBonus.toString());
-        localStorage.setItem('gradly_on_time_bonus', onTimeBonus.toString());
-        localStorage.setItem('gradly_bonus_rules', JSON.stringify(bonusRules));
+        // Ignore DB errors
       });
     }, 600);
     return () => clearTimeout(id);
