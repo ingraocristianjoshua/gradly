@@ -366,8 +366,11 @@ export default function Home() {
         {/* ── Hero: grade arc ── */}
         <section className="flex flex-col items-center gap-6 animate-fade-in">
           <div className="flex flex-col items-center text-center">
-            <div className="flex flex-col items-center justify-center mb-2">
-              <svg className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] drop-shadow-md mb-3" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoHero)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="flex flex-row items-center justify-center gap-3 md:gap-4 mb-2 flex-wrap">
+              <h1 className="text-[36px] md:text-[56px] lg:text-[64px] font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent pb-2 leading-none text-center">
+                Calcola il tuo voto di laurea
+              </h1>
+              <svg className="w-[36px] h-[36px] md:w-[52px] md:h-[52px] drop-shadow-md rotate-12 flex-shrink-0 pb-2" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoHero)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <defs>
                   <linearGradient id="gradLogoHero" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#8a2387" />
@@ -377,9 +380,6 @@ export default function Home() {
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
-              <h1 className="text-[36px] md:text-[56px] lg:text-[64px] font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent pb-2 leading-none max-w-3xl">
-                Calcola il tuo voto di laurea
-              </h1>
             </div>
             <p className="mt-2 text-gray-500 dark:text-gray-400 text-base font-medium max-w-lg">
               Inserisci o importa gli esami — il calcolo è automatico.
