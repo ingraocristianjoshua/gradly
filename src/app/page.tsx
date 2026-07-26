@@ -366,7 +366,7 @@ export default function Home() {
         <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-pink-300 dark:bg-pink-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000" />
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-20">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-10">
 
         {/* ── Hero: grade arc ── */}
         <section className="flex flex-col items-center gap-6 animate-fade-in">
