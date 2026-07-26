@@ -618,7 +618,7 @@ export default function Home() {
         {/* BOTTOM WIDE BLOCK: Settings & Bonus */}
         <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 w-full animate-fade-in">
            <div className="flex items-center gap-3">
-             <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi e Impostazioni</h2>
+             <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi</h2>
            </div>
            
            <div className="flex flex-col md:flex-row gap-8 items-stretch w-full">
