@@ -693,24 +693,30 @@ export default function Home() {
               </div>
 
               {/* Dropped Exams Visual Receipt */}
-              {droppedExams.length > 0 && (
-                <div className="bg-[#f27121]/5 border border-[#f27121]/20 rounded-2xl p-4 flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#f27121] uppercase tracking-wider">Materie Scartate ({discardedCfu} CFU)</span>
-                  </div>
-                  <div className="flex flex-col gap-1.5 mt-2">
-                    {droppedExams.map((dx, i) => (
-                      <div key={i} className="flex items-center justify-between text-xs bg-white/50 dark:bg-black/20 p-1.5 px-3 rounded-lg">
-                        <span className="font-medium text-gray-700 dark:text-gray-300 truncate max-w-[140px]" title={dx.name}>{dx.name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-gray-400">{dx.grade}</span>
-                          <span className="text-[10px] font-bold bg-[#f27121] text-white px-1.5 rounded">- {dx.cfuDropped} cfu</span>
+              <div className="flex-1 mt-2">
+                {droppedExams.length > 0 ? (
+                  <div className="bg-[#f27121]/5 border border-[#f27121]/20 rounded-2xl p-4 flex flex-col gap-2 animate-fade-in">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#f27121] uppercase tracking-wider">Materie Scartate ({discardedCfu} CFU)</span>
+                    </div>
+                    <div className="flex flex-col gap-1.5 mt-2">
+                      {droppedExams.map((dx, i) => (
+                        <div key={i} className="flex items-center justify-between text-xs bg-white/50 dark:bg-black/20 p-1.5 px-3 rounded-lg">
+                          <span className="font-medium text-gray-700 dark:text-gray-300 truncate max-w-[140px]" title={dx.name}>{dx.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-gray-400">{dx.grade}</span>
+                            <span className="text-[10px] font-bold bg-[#f27121] text-white px-1.5 rounded">- {dx.cfuDropped} cfu</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-center opacity-40 border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 h-full min-h-[100px] animate-fade-in">
+                    <span className="text-xs">Nessuna materia scartata in automatico.</span>
+                  </div>
+                )}
+              </div>
 
               {/* Action for Manual Exclusion Popup */}
               <div className="mt-auto flex flex-col items-start gap-2 pt-4">
