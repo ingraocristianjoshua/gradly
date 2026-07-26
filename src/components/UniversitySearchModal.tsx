@@ -2,6 +2,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
+interface University {
+  id: string;
+  name: string;
+}
+
 interface SearchResult {
   name: string;
   links: { name: string; oid: string }[];
@@ -12,10 +17,13 @@ interface Props {
   onImport: (exams: { name: string; cfu: number }[]) => void;
 }
 
-type Step = 'search' | 'curricula' | 'preview';
+type Step = 'select_uni' | 'search' | 'curricula' | 'preview';
 
 export default function UniversitySearchModal({ onClose, onImport }: Props) {
-  const [step, setStep] = useState<Step>('search');
+  const [step, setStep] = useState<Step>('select_uni');
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [selectedUni, setSelectedUni] = useState<University | null>(null);
+  
   const [query, setQuery]         = useState('');
   const [year, setYear]           = useState(new Date().getFullYear().toString());
   const [results, setResults]     = useState<SearchResult[]>([]);
@@ -27,6 +35,14 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
   const [degreeName, setDegreeName] = useState('');
   const [chosen, setChosen]       = useState<Set<number>>(new Set());
 
+  // Load universities on mount
+  useEffect(() => {
+    fetch('/api/universities/list')
+      .then(r => r.json())
+      .then(data => setUniversities(data))
+      .catch(() => setError('Errore nel caricamento delle università'));
+  }, []);
+
   // Filter results client-side on query change
   useEffect(() => {
     if (!results.length) { setFiltered([]); return; }
@@ -34,13 +50,13 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
     setFiltered(q ? results.filter(r => r.name.toLowerCase().includes(q)) : results);
   }, [query, results]);
 
-  const searchUnipa = useCallback(async () => {
+  const searchCourses = useCallback(async (uniId: string, searchYear: string, searchQuery: string = '') => {
     setLoading(true);
     setError('');
     setResults([]);
     setFiltered([]);
     try {
-      const res = await fetch(`/api/unipa/search?anno=${year}`);
+      const res = await fetch(`/api/universities/search?uniId=${uniId}&anno=${searchYear}&query=${encodeURIComponent(searchQuery)}`);
       const data = await res.json();
       if (data.error) { setError(data.error); return; }
       setResults(data);
@@ -51,16 +67,19 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [year]);
+  }, []);
 
-  // Auto-load on mount
-  useEffect(() => { searchUnipa(); }, [searchUnipa]);
+  const handleSelectUni = (uni: University) => {
+    setSelectedUni(uni);
+    searchCourses(uni.id, year, '');
+  };
 
   const pickCurriculum = async (oid: string) => {
+    if (!selectedUni) return;
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`/api/unipa/fetch?oid=${oid}`);
+      const res = await fetch(`/api/universities/fetch?uniId=${selectedUni.id}&oid=${oid}&anno=${year}`);
       const data = await res.json();
       if (data.error) { setError(data.error); return; }
       setLectures(data.lectures ?? []);
@@ -86,7 +105,7 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div
-        className="glass dark:bg-[#18181b]/80 animate-scale-in w-full max-w-2xl rounded-3xl flex flex-col max-h-[85vh] overflow-hidden border border-black/5 dark:border-white/10"
+        className="glass dark:bg-[#18181b]/90 animate-scale-in w-full max-w-2xl rounded-[36px] flex flex-col max-h-[85vh] overflow-hidden border border-black/5 dark:border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -103,13 +122,6 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
             <div>
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                {step === 'preview' ? 'Scegli le materie' : 'Importa Piano di Studi'}
-              </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Università degli Studi di Palermo (UniPa)</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
             {step === 'preview' && (
               <button
                 onClick={() => setStep('search')}
@@ -130,10 +142,45 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
         {/* Body */}
         <div className="flex flex-col flex-1 overflow-hidden p-6 gap-4">
 
-          {step !== 'preview' && (
+          {error && (
+            <div className="bg-red-50 text-red-500 text-sm font-medium px-4 py-3 rounded-xl border border-red-100">
+              {error}
+            </div>
+          )}
+
+          {step === 'select_uni' && (
+            <div className="flex flex-col gap-4 animate-fade-in">
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Scegli la tua università</h3>
+              {universities.length === 0 && !error ? (
+                <div className="flex justify-center py-10"><span className="loader"></span></div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {universities.map(uni => (
+                    <button
+                      key={uni.id}
+                      onClick={() => handleSelectUni(uni)}
+                      className="flex flex-col text-left p-5 rounded-2xl bg-white/70 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-[#e94057] hover:shadow-md transition-all group"
+                    >
+                      <span className="text-2xl mb-2 grayscale group-hover:grayscale-0 transition-all">🏛️</span>
+                      <span className="font-bold text-gray-900 dark:text-white">{uni.name}</span>
+                    </button>
+                  ))}
+                  <div className="flex flex-col text-left p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-dashed border-black/10 dark:border-white/10 opacity-60">
+                    <span className="text-2xl mb-2 grayscale">🚧</span>
+                    <span className="font-bold text-gray-600 dark:text-gray-400">Altre in arrivo...</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {step !== 'preview' && step !== 'select_uni' && step !== 'curricula' && (
             <>
               {/* Search bar */}
               <div className="flex gap-2">
+                <button onClick={() => setStep('select_uni')} className="bg-white/80 dark:bg-[#27272a] border border-black/8 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 dark:text-white hover:bg-white dark:hover:bg-white/20 transition-all">
+                  ←
+                </button>
                 <div className="relative flex-1">
                   <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -148,7 +195,10 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
                 </div>
                 <select
                   value={year}
-                  onChange={(e) => setYear(e.target.value)}
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                    if (selectedUni) searchCourses(selectedUni.id, e.target.value, query);
+                  }}
                   className="bg-white/80 dark:bg-[#27272a] border border-black/8 dark:border-white/10 rounded-xl px-3 py-3 text-sm font-medium text-gray-900 dark:text-white outline-none focus:border-[#e94057] transition-all"
                 >
                   {[0, 1, 2, 3].map((offset) => {
@@ -157,7 +207,7 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
                   })}
                 </select>
                 <button
-                  onClick={searchUnipa}
+                  onClick={() => selectedUni && searchCourses(selectedUni.id, year, query)}
                   disabled={loading}
                   className="bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white text-sm font-semibold px-4 py-3 rounded-xl shadow hover:opacity-90 disabled:opacity-50 transition-all"
                 >
@@ -165,16 +215,10 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
                 </button>
               </div>
 
-              {error && (
-                <div className="bg-red-50 text-red-500 text-sm font-medium px-4 py-3 rounded-xl border border-red-100">
-                  {error}
-                </div>
-              )}
-
               {loading && !results.length && (
                 <div className="flex flex-col items-center gap-3 py-12 text-gray-400">
                   <div className="w-8 h-8 border-2 border-[#e94057]/30 border-t-[#e94057] rounded-full animate-spin" />
-                  <p className="text-sm font-medium">Caricamento offerta formativa UniPa...</p>
+                  <p className="text-sm font-medium">Ricerca in corso...</p>
                 </div>
               )}
             </>
