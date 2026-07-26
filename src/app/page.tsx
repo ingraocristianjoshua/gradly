@@ -63,10 +63,45 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
     return aGrade - bGrade;
   });
 
-  let remainingDrop = worstCfuToDrop;
+  let bestPonderata = -1;
+  let optimalDropLimit = 0;
+
+  // Find the optimal number of CFUs to drop to maximize ponderata
+  for (let dropLimit = 0; dropLimit <= worstCfuToDrop; dropLimit++) {
+    let testRemainingDrop = dropLimit;
+    let testFinalExams = [...coreExams];
+    
+    for (const e of nonCoreExams) {
+      let cfuToCount = e.cfu;
+      if (testRemainingDrop > 0) {
+        const drop = Math.min(e.cfu, testRemainingDrop);
+        cfuToCount -= drop;
+        testRemainingDrop -= drop;
+      }
+      if (cfuToCount > 0) {
+        testFinalExams.push({ ...e, cfu: cfuToCount });
+      }
+    }
+    
+    let tSumWeighted = 0;
+    let tGradedCfu = 0;
+    for (const e of testFinalExams) {
+      const g = e.lode ? 30 : e.grade;
+      tSumWeighted += g * e.cfu;
+      tGradedCfu += e.cfu;
+    }
+    const tPonderata = tGradedCfu > 0 ? tSumWeighted / tGradedCfu : 0;
+    
+    if (tPonderata > bestPonderata) {
+      bestPonderata = tPonderata;
+      optimalDropLimit = dropLimit;
+    }
+  }
+
+  // Apply the optimal drop limit
+  let remainingDrop = optimalDropLimit;
   let discardedCfu = 0;
   let droppedExams: Array<{name: string, cfuDropped: number, grade: number}> = [];
-
   let finalExamsToCount = [...coreExams];
 
   for (const e of nonCoreExams) {
@@ -696,9 +731,9 @@ export default function Home() {
            <div className="flex flex-col gap-6 md:w-[320px] md:border-l border-t md:border-t-0 border-black/5 dark:border-white/5 pt-6 md:pt-0 md:pl-8">
               <div>
                 <PointsSlider
-                  label="Scarta peggiori (CFU)"
-                  desc="CFU da escludere dalla media"
-                  value={worstCfu} min={0} max={18}
+                  label="Limite CFU scartabili"
+                  desc="Gradly calcolerà in automatico quanti e quali scartare"
+                  value={worstCfu} min={0} max={30}
                   onChange={setWorstCfu}
                   color="#f27121"
                 />
