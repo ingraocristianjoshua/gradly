@@ -133,8 +133,12 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
     gradedCfu += e.cfu;
   }
 
-  const aritmetica = countedExams > 0 ? sumGrades / countedExams : 0;
-  const ponderata  = gradedCfu > 0 ? sumWeighted / gradedCfu : 0;
+  const rawAritmetica = countedExams > 0 ? sumGrades / countedExams : 0;
+  const rawPonderata  = gradedCfu > 0 ? sumWeighted / gradedCfu : 0;
+  
+  // Arrotonda a due cifre decimali prima del calcolo base (come richiesto)
+  const aritmetica = Math.round(rawAritmetica * 100) / 100;
+  const ponderata  = Math.round(rawPonderata * 100) / 100;
   const partenza   = ponderata * 110 / 30;
   
   let computedBonus = 0;
