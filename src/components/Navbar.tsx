@@ -47,8 +47,8 @@ export default function Navbar({ onImport }: NavbarProps) {
     <nav className="nav-blur sticky top-0 z-40 border-b border-black/5 dark:border-white/5">
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-1.5 group cursor-pointer">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoNav)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+        <a href="/" className="flex items-center gap-0.5 group cursor-pointer">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoNav)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
             <defs>
               <linearGradient id="gradLogoNav" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#8a2387" />
@@ -58,7 +58,7 @@ export default function Navbar({ onImport }: NavbarProps) {
             <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
             <path d="M6 12v5c3 3 9 3 12 0v-5"/>
           </svg>
-          <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent pb-0.5 group-hover:opacity-80 transition-opacity duration-300">
+          <span className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent pb-0.5 group-hover:opacity-80 transition-opacity duration-300">
             Gradly
           </span>
         </a>
