@@ -727,6 +727,7 @@ export default function Home() {
            </div>
         </div>
         </div>
+      </div>
       </main>
 
       <footer className="mt-10 border-t border-black/5 dark:border-white/5 bg-white/30 dark:bg-black/20 backdrop-blur-sm py-8">
