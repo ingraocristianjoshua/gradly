@@ -551,7 +551,7 @@ export default function Home() {
                     Elimina tutti
                   </button>
                 </div>
-                <div className="flex flex-col gap-2 overflow-y-auto flex-1 max-h-[500px] pr-1">
+                <div className="flex flex-col gap-2 lg:overflow-y-auto flex-1 lg:max-h-[600px] pr-1">
                   {activeExams.map((exam) => (
                     <div
                       key={exam.id}
@@ -580,8 +580,6 @@ export default function Home() {
                               </span>
                             )}
                           </span>
-                        ) : exam.grade === 0 ? (
-                          <span className="text-sm font-extrabold text-[#0071e3] tracking-wide">IDONEO</span>
                         ) : (
                           <span className="text-xs text-gray-300 dark:text-gray-600 italic">—</span>
                         )}
