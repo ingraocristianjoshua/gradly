@@ -31,8 +31,8 @@ export default function PointsSlider({ label, desc, value, min, max, onChange, c
         max={max}
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value))}
-        style={{ accentColor: color }}
-        className="w-full h-2.5 rounded-lg cursor-pointer my-3 appearance-auto drop-shadow-sm"
+        style={{ '--slider-color': color } as React.CSSProperties}
+        className="w-full cursor-pointer my-4 custom-slider"
         aria-label={label}
       />
       <div className="flex justify-between text-xs text-gray-300 font-medium">
