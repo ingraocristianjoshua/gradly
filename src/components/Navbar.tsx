@@ -47,7 +47,7 @@ export default function Navbar({ onImport }: NavbarProps) {
     <nav className="nav-blur sticky top-0 z-40 border-b border-black/5 dark:border-white/5">
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-0.5 group cursor-pointer">
+        <a href="/" className="flex items-center gap-2 group cursor-pointer">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoNav)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-sm group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
             <defs>
               <linearGradient id="gradLogoNav" x1="0%" y1="0%" x2="100%" y2="100%">

@@ -6,6 +6,8 @@ export interface GradeArcProps {
   partenza: number;
   thesisPoints: number;
   committeePoints: number;
+  lodeBonus: number;
+  onTimeBonus: number;
 }
 
 function arcColor(grade: number): string {
@@ -16,7 +18,7 @@ function arcColor(grade: number): string {
 }
 
 export default function GradeArc({
-  grade, lode, partenza, thesisPoints, committeePoints,
+  grade, lode, partenza, thesisPoints, committeePoints, lodeBonus, onTimeBonus
 }: GradeArcProps) {
   const r    = 180;
   const cx   = 220;
@@ -87,7 +89,7 @@ export default function GradeArc({
           fontFamily="Inter, -apple-system, sans-serif"
           style={{ transition: 'fill 0.5s ease' }}
         >
-          {hasGrade ? grade : '—'}
+          {hasGrade ? grade.toLocaleString('it-IT', { maximumFractionDigits: 1 }) : '—'}
         </text>
 
         {/* Lode label */}
@@ -121,7 +123,9 @@ export default function GradeArc({
           {([
             { label: 'Base',    value: partenza.toFixed(1), color: '#8a2387' },
             { label: 'Tesi',    value: `+${thesisPoints}`,  color: '#e94057' },
-            { label: 'Comm.',   value: `+${committeePoints}`, color: '#0071e3' },
+            { label: 'Bonus',   value: `+${committeePoints}`, color: '#0071e3' },
+            ...(lodeBonus > 0 ? [{ label: 'Lodi', value: `+${lodeBonus}`, color: '#f59e0b' }] : []),
+            ...(onTimeBonus > 0 ? [{ label: 'In Corso', value: `+${onTimeBonus}`, color: '#34c759' }] : []),
           ] as const).map((item) => (
             <div key={item.label}
               className="glass rounded-2xl px-4 py-2 flex flex-col items-center min-w-[72px]"

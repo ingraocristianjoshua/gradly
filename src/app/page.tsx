@@ -122,9 +122,11 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
 
   let sumGrades = 0, sumWeighted = 0, gradedCfu = 0;
   let countedExams = 0;
+  let lodeCount = 0;
 
   for (const e of finalExamsToCount) {
     const g = e.lode ? 30 : e.grade;
+    if (e.lode) lodeCount++;
     sumGrades += g;
     countedExams += 1;
     sumWeighted += g * e.cfu;
@@ -143,7 +145,7 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
     }
   }
   
-  return { aritmetica, ponderata, partenza, totalCfu, gradedCfu, excludedCfu, discardedCfu, droppedExams, computedBonus };
+  return { aritmetica, ponderata, partenza, totalCfu, gradedCfu, excludedCfu, discardedCfu, droppedExams, computedBonus, lodeCount };
 }
 
 async function apiPost<T>(url: string, body: unknown): Promise<T> {
@@ -162,6 +164,8 @@ export default function Home() {
   const [exams, setExams]           = useState<Exam[]>([]);
   const [thesisPoints, setThesis]   = useState(0);
   const [worstCfu, setWorstCfu]     = useState(0);
+  const [lodeBonus, setLodeBonus]   = useState(0.5);
+  const [onTimeBonus, setOnTimeBonus] = useState(0);
   const [bonusRules, setBonusRules] = useState<BonusRule[]>([]);
   const [showImport, setShowImport] = useState(false);
   const [showExclusionModal, setShowExclusionModal] = useState(false);
@@ -216,6 +220,8 @@ export default function Home() {
       if (e) setExams(JSON.parse(e));
       setThesis(parseInt(localStorage.getItem('gradly_thesis') || '0'));
       setWorstCfu(parseInt(localStorage.getItem('gradly_worst_cfu') || '0'));
+      setLodeBonus(parseFloat(localStorage.getItem('gradly_lode_bonus') || '0.5'));
+      setOnTimeBonus(parseFloat(localStorage.getItem('gradly_on_time_bonus') || '0'));
     } finally {
       // Always load bonus rules from local storage since it's not in the DB schema yet
       try {
@@ -239,11 +245,13 @@ export default function Home() {
       }).catch(() => {
         localStorage.setItem('gradly_thesis',     thesisPoints.toString());
         localStorage.setItem('gradly_worst_cfu',  worstCfu.toString());
+        localStorage.setItem('gradly_lode_bonus', lodeBonus.toString());
+        localStorage.setItem('gradly_on_time_bonus', onTimeBonus.toString());
         localStorage.setItem('gradly_bonus_rules', JSON.stringify(bonusRules));
       });
     }, 600);
     return () => clearTimeout(id);
-  }, [thesisPoints, worstCfu, bonusRules, dbReady]);
+  }, [thesisPoints, worstCfu, lodeBonus, onTimeBonus, bonusRules, dbReady]);
 
   // ── Persist exams to local storage ──
   useEffect(() => {
@@ -329,14 +337,14 @@ export default function Home() {
   };
 
   // ── Stats Calculation ──
-  const { aritmetica, ponderata, partenza, totalCfu, gradedCfu, excludedCfu, discardedCfu, droppedExams, computedBonus } = calcStats(exams, worstCfu, bonusRules);
+  const { aritmetica, ponderata, partenza, totalCfu, gradedCfu, excludedCfu, discardedCfu, droppedExams, computedBonus, lodeCount } = calcStats(exams, worstCfu, bonusRules);
   const hasGrade = gradedCfu > 0;
   let finaleCapped = 0;
   let lodeFinale = false;
 
   if (hasGrade) {
-    let totale = partenza + thesisPoints + computedBonus;
-    finaleCapped = Math.min(Math.round(totale), 110);
+    let totale = partenza + thesisPoints + computedBonus + (lodeCount * lodeBonus) + onTimeBonus;
+    finaleCapped = Math.min(totale, 110);
     lodeFinale = totale >= 111;
   }
 
@@ -398,6 +406,8 @@ export default function Home() {
             partenza={partenza}
             thesisPoints={thesisPoints}
             committeePoints={computedBonus}
+            lodeBonus={lodeCount > 0 ? lodeCount * lodeBonus : 0}
+            onTimeBonus={onTimeBonus}
           />
 
           {/* Stats row */}
@@ -680,6 +690,36 @@ export default function Home() {
                     onChange={setThesis}
                     color="#e94057"
                   />
+                </div>
+
+                {/* Punti Lode */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">Punti per Lode</p>
+                      <p className="text-xs text-gray-400">Punti extra per ogni 30L (default 0.5)</p>
+                    </div>
+                    <span className="text-white text-sm font-bold py-1 px-3 rounded-full min-w-[48px] text-center shadow" style={{ background: '#f59e0b' }}>
+                      +{lodeBonus}
+                    </span>
+                  </div>
+                  <input type="range" min="0" max="2" step="0.25" value={lodeBonus} onChange={(e) => setLodeBonus(parseFloat(e.target.value))} style={{ '--slider-color': '#f59e0b' } as React.CSSProperties} className="w-full cursor-pointer my-4 custom-slider" />
+                  <div className="flex justify-between text-xs text-gray-300 font-medium"><span>0</span><span>2</span></div>
+                </div>
+
+                {/* Laurea in Corso */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">Punti in corso</p>
+                      <p className="text-xs text-gray-400">Punti se ci si laurea in tempo</p>
+                    </div>
+                    <span className="text-white text-sm font-bold py-1 px-3 rounded-full min-w-[48px] text-center shadow" style={{ background: '#34c759' }}>
+                      +{onTimeBonus}
+                    </span>
+                  </div>
+                  <input type="range" min="0" max="5" step="0.5" value={onTimeBonus} onChange={(e) => setOnTimeBonus(parseFloat(e.target.value))} style={{ '--slider-color': '#34c759' } as React.CSSProperties} className="w-full cursor-pointer my-4 custom-slider" />
+                  <div className="flex justify-between text-xs text-gray-300 font-medium"><span>0</span><span>5</span></div>
                 </div>
                 
                 {/* Dynamic Rules for Average */}

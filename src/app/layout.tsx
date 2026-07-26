@@ -24,7 +24,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full flex flex-col antialiased bg-[#f5f5f7] dark:bg-[#0d0d10] text-gray-900 dark:text-gray-100 transition-colors duration-300"
+        className="min-h-full flex flex-col antialiased bg-animated-gradient text-gray-900 dark:text-gray-100 transition-colors duration-300"
         style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" }}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
