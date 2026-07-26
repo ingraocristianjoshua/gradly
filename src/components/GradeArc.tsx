@@ -33,10 +33,8 @@ export default function GradeArc({
   return (
     <div className="flex flex-col items-center gap-4">
       <svg
-        width="440"
-        height="240"
         viewBox="0 0 440 240"
-        className="drop-shadow-lg"
+        className="w-full max-w-[440px] h-auto drop-shadow-lg"
         aria-label={`Voto finale previsto: ${hasGrade ? grade : 'nessun dato'}`}
       >
         <defs>

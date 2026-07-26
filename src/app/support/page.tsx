@@ -15,16 +15,12 @@ function FAQ({ q, a }: { q: string; a: string }) {
 
 export default function Support() {
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#09090b] transition-colors duration-500">
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-60 dark:opacity-20 animate-blob"
-          style={{ background: 'linear-gradient(to right, #8a2387, #e94057)' }}
-        />
-        <div
-          className="absolute top-[20%] right-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-60 dark:opacity-20 animate-blob animation-delay-2000"
-          style={{ background: 'linear-gradient(to right, #f27121, #e94057)' }}
-        />
+    <div className="min-h-screen transition-colors duration-500">
+      <div className="fixed inset-0 -z-20 bg-animated-gradient transition-colors duration-500" />
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-40 dark:opacity-20">
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-300 dark:bg-blue-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-purple-300 dark:bg-purple-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-pink-300 dark:bg-pink-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000" />
       </div>
       <nav className="nav-blur sticky top-0 z-40 border-b border-black/5 dark:border-white/5">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center gap-3">
@@ -45,8 +41,8 @@ export default function Support() {
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Support</span>
         </div>
       </nav>
-      <main className="max-w-3xl mx-auto px-6 py-16 flex flex-col gap-8">
-        <div className="glass rounded-3xl p-10 flex flex-col gap-6">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 flex flex-col gap-8">
+        <div className="glass rounded-[36px] p-6 sm:p-10 flex flex-col gap-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Supporto</h1>
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
             Hai domande su come funziona Gradly? Ecco le risposte alle domande più frequenti. Per qualsiasi altra richiesta, puoi contattarci via email.

@@ -6,16 +6,12 @@ export const metadata: Metadata = { title: 'About – Gradly' };
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#09090b] transition-colors duration-500">
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-60 dark:opacity-20 animate-blob"
-          style={{ background: 'linear-gradient(to right, #8a2387, #e94057)' }}
-        />
-        <div
-          className="absolute top-[20%] right-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[140px] opacity-60 dark:opacity-20 animate-blob animation-delay-2000"
-          style={{ background: 'linear-gradient(to right, #f27121, #e94057)' }}
-        />
+    <div className="min-h-screen transition-colors duration-500">
+      <div className="fixed inset-0 -z-20 bg-animated-gradient transition-colors duration-500" />
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-40 dark:opacity-20">
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-300 dark:bg-blue-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-purple-300 dark:bg-purple-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-pink-300 dark:bg-pink-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000" />
       </div>
       <nav className="nav-blur sticky top-0 z-40 border-b border-black/5 dark:border-white/5">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center gap-3">
@@ -36,8 +32,8 @@ export default function About() {
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">About</span>
         </div>
       </nav>
-      <main className="max-w-3xl mx-auto px-6 py-16">
-        <div className="glass rounded-3xl p-10 flex flex-col gap-8">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
+        <div className="glass rounded-[36px] p-6 sm:p-10 flex flex-col gap-8">
           <div className="flex items-center gap-5">
             <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoLarge)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-md">
               <defs>
@@ -59,7 +55,7 @@ export default function About() {
               <strong className="text-gray-900 dark:text-white">Gradly</strong> è uno strumento gratuito che aiuta gli studenti universitari italiani a calcolare la propria <strong>media ponderata</strong> e a stimare il <strong>voto finale di laurea</strong>.
             </p>
             <p>
-              Progettato con la stessa cura dei prodotti Apple, Gradly combina semplicità e potenza: puoi inserire i tuoi esami manualmente oppure importare il piano di studi direttamente dal portale della tua università — al momento supportiamo <strong>UniPa</strong> (Università degli Studi di Palermo).
+              Progettato con un'incredibile cura per i dettagli, Gradly combina semplicità e potenza: puoi inserire i tuoi esami manualmente oppure importare il piano di studi direttamente dal portale della tua università — al momento supportiamo <strong>UniPa</strong> (Università degli Studi di Palermo).
             </p>
             <p>
               I tuoi dati vengono salvati in modo sicuro su un database PostgreSQL associato alla tua sessione anonima — nessun account richiesto, nessun dato personale raccolto.
