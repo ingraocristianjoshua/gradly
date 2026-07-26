@@ -11,15 +11,15 @@
 }
 
 .bg-animated-gradient {
-  /* Ultra-subtle light background inspired by Apple's clean aesthetic */
-  background: linear-gradient(-45deg, #fbfbfd, #f5f5f7, #fdfdfd, #f5f5f7);
+  /* Soft, elegant moving pastel gradient for light mode */
+  background: linear-gradient(-45deg, #fdf2f8, #eff6ff, #f0fdf4, #fffbeb);
   background-size: 400% 400%;
   animation: moving-gradient 20s ease infinite;
 }
 
 .dark .bg-animated-gradient {
-  /* Deep, elegant dark background */
-  background: linear-gradient(-45deg, #000000, #0a0a0c, #111116, #000000);
+  /* Deep, moving cool/purple gradient for dark mode */
+  background: linear-gradient(-45deg, #1e1b4b, #0f172a, #2e1065, #020617);
   background-size: 400% 400%;
   animation: moving-gradient 25s ease infinite;
 }
