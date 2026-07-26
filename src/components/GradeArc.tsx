@@ -92,10 +92,10 @@ export default function GradeArc({
           {hasGrade ? grade.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—'}
         </text>
 
-        {/* Approximation (per eccesso) */}
+        {/* Approximation (arrotondamento standard) */}
         {hasGrade && (
           <text x={cx} y={cy + 20} textAnchor="middle" fill="#9ca3af" fontSize="14" fontWeight="600">
-            Arrotondato: {Math.ceil(grade)}
+            Arrotondato: {Math.round(grade)}
           </text>
         )}
 
