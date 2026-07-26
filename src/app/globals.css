@@ -18,8 +18,8 @@
 }
 
 .dark .bg-animated-gradient {
-  /* Deep, moving cool/purple gradient for dark mode */
-  background: linear-gradient(-45deg, #1e1b4b, #0f172a, #2e1065, #020617);
+  /* Deep, elegant dark background */
+  background: linear-gradient(-45deg, #000000, #0a0a0c, #111116, #000000);
   background-size: 400% 400%;
   animation: moving-gradient 25s ease infinite;
 }

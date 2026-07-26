@@ -367,7 +367,7 @@ export default function Home() {
         <section className="flex flex-col items-center gap-6 animate-fade-in">
           <div className="flex flex-col items-center text-center">
             <div className="flex flex-row items-center justify-center gap-4 md:gap-6 mb-2">
-              <svg className="w-[56px] h-[56px] md:w-[76px] md:h-[76px] drop-shadow-md animate-floating flex-shrink-0 pb-2" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoHero)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-[64px] h-[64px] md:w-[88px] md:h-[88px] drop-shadow-md animate-floating flex-shrink-0 pb-2" viewBox="0 0 24 24" fill="none" stroke="url(#gradLogoHero)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <defs>
                   <linearGradient id="gradLogoHero" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#8a2387" />
