@@ -358,8 +358,13 @@ export default function Home() {
   return (
     <>
       <Navbar onImport={() => setShowImport(true)} />
-      {/* ── Animated Clean Background ── */}
+      {/* ── Animated Background ── */}
       <div className="fixed inset-0 -z-20 bg-animated-gradient transition-colors duration-500" />
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-40 dark:opacity-20">
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-300 dark:bg-blue-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-purple-300 dark:bg-purple-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-pink-300 dark:bg-pink-900 mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000" />
+      </div>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-20">
 
