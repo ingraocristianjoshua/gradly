@@ -102,7 +102,8 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
   
   let computedBonus = 0;
   for (const r of bonusRules) {
-    if (ponderata >= r.min && ponderata <= r.max) {
+    const val = r.max > 31 ? partenza : ponderata;
+    if (val >= r.min && val <= r.max) {
       if (r.points > computedBonus) computedBonus = r.points;
     }
   }
@@ -304,8 +305,8 @@ export default function Home() {
     lodeFinale = totale >= 111;
   }
 
-  const coreExams = exams.filter((e) => e.isCore !== false);
-  const excludedExams = exams.filter((e) => e.isCore === false);
+  const activeExams = exams.filter((e) => !e.isExcluded);
+  const excludedExams = exams.filter((e) => e.isExcluded);
 
   // ── Render ──
   return (
@@ -510,7 +511,7 @@ export default function Home() {
                   </button>
                 </div>
                 <div className="flex flex-col gap-2 overflow-y-auto flex-1 max-h-[500px] pr-1">
-                  {coreExams.map((exam) => (
+                  {activeExams.map((exam) => (
                     <div
                       key={exam.id}
                       onClick={() => startEditing(exam)}
@@ -673,7 +674,9 @@ export default function Home() {
                   <div className="flex flex-col gap-2 max-h-[120px] overflow-y-auto pr-1">
                     {bonusRules.length === 0 && <div className="text-xs text-gray-400 italic text-center py-2">Nessuna regola definita</div>}
                     {bonusRules.map(r => {
-                      const isActive = ponderata >= r.min && ponderata <= r.max;
+                      const isBase110 = r.max > 31;
+                      const valToCompare = isBase110 ? partenza : ponderata;
+                      const isActive = valToCompare >= r.min && valToCompare <= r.max;
                       return (
                         <div key={r.id} className={`flex items-center justify-between p-2 rounded-xl border text-sm transition-all ${isActive ? 'bg-[#8a2387]/10 border-[#8a2387]/30' : 'bg-black/5 dark:bg-white/5 border-transparent'}`}>
                           <div className="flex items-center gap-2">
