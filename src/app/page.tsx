@@ -622,7 +622,7 @@ export default function Home() {
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi e Impostazioni</h2>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="flex flex-col gap-8 max-w-[400px]">
                 {/* Thesis Slider */}
                 <div>
                   <PointsSlider
