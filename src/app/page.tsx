@@ -156,23 +156,25 @@ export default function Home() {
   const loadData = useCallback(async () => {
     try {
       const [er, sr] = await Promise.all([fetch('/api/exams'), fetch('/api/settings')]);
-      if (er.ok) setExams(await er.json());
-      if (sr.ok) {
-        const s = await sr.json();
-        if (s) {
-          setThesis(s.thesisPoints || 0);
-          setWorstCfu(s.worstCfu || 0);
-        }
+      if (!er.ok || !sr.ok) throw new Error('API failed, falling back to local');
+      
+      setExams(await er.json());
+      const s = await sr.json();
+      if (s) {
+        setThesis(s.thesisPoints || 0);
+        setWorstCfu(s.worstCfu || 0);
       }
     } catch {
       const e = localStorage.getItem('gradly_exams');
       if (e) setExams(JSON.parse(e));
       setThesis(parseInt(localStorage.getItem('gradly_thesis') || '0'));
       setWorstCfu(parseInt(localStorage.getItem('gradly_worst_cfu') || '0'));
-      
-      const b = localStorage.getItem('gradly_bonus_rules');
-      if (b) setBonusRules(JSON.parse(b));
     } finally {
+      // Always load bonus rules from local storage since it's not in the DB schema yet
+      try {
+        const b = localStorage.getItem('gradly_bonus_rules');
+        if (b) setBonusRules(JSON.parse(b));
+      } catch {}
       setDbReady(true);
     }
   }, []);
@@ -614,15 +616,14 @@ export default function Home() {
         </div>
 
         {/* BOTTOM WIDE BLOCK: Settings & Bonus */}
-        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col lg:flex-row gap-8 w-full items-stretch animate-fade-in">
+        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 w-full animate-fade-in">
+           <div className="flex items-center gap-3">
+             <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi e Impostazioni</h2>
+           </div>
            
-           {/* Left side: Points & Bonus Rules */}
-           <div className="flex-1 flex flex-col gap-6">
-              <div className="flex items-center gap-3">
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">Punti aggiuntivi e Impostazioni</h2>
-              </div>
-              
-              <div className="flex flex-col gap-8 max-w-[400px]">
+           <div className="flex flex-col lg:flex-row gap-8 items-stretch w-full">
+             {/* Left side: Points & Bonus Rules */}
+             <div className="flex-1 flex flex-col gap-8 max-w-[400px]">
                 {/* Thesis Slider */}
                 <div>
                   <PointsSlider
@@ -727,6 +728,7 @@ export default function Home() {
                   </button>
               </div>
            </div>
+        </div>
         </div>
         </div>
       </main>
