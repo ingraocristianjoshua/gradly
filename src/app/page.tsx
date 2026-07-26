@@ -184,7 +184,7 @@ export default function Home() {
   const [examGrade, setExamGrade] = useState<number | null>(null);
   const [examLode, setExamLode]   = useState(false);
   const [examCfu, setExamCfu]     = useState('');
-  const [examIsCore, setExamIsCore] = useState(true);
+  const [examIsCore, setExamIsCore] = useState(false);
   const [adding, setAdding]       = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -194,7 +194,7 @@ export default function Home() {
     setExamGrade(exam.grade > 0 ? exam.grade : null);
     setExamLode(exam.lode);
     setExamCfu(exam.cfu.toString());
-    setExamIsCore(exam.isCore ?? true);
+    setExamIsCore(exam.isCore ?? false);
   };
 
   const cancelEditing = () => {
@@ -203,7 +203,7 @@ export default function Home() {
     setExamGrade(null);
     setExamLode(false);
     setExamCfu('');
-    setExamIsCore(true);
+    setExamIsCore(false);
   };
 
   // ── Load from DB (with localStorage fallback) ──
