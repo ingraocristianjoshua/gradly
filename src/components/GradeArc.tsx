@@ -80,21 +80,28 @@ export default function GradeArc({
 
         {/* Grade number */}
         <text
-          x={cx} y={cy - 20}
+          x={cx} y={cy - 24}
           textAnchor="middle"
           dominantBaseline="middle"
           fill={hasGrade ? color : '#9ca3af'}
-          fontSize="80"
+          fontSize="72"
           fontWeight="800"
           fontFamily="Inter, -apple-system, sans-serif"
           style={{ transition: 'fill 0.5s ease' }}
         >
-          {hasGrade ? grade.toLocaleString('it-IT', { maximumFractionDigits: 1 }) : '—'}
+          {hasGrade ? grade.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—'}
         </text>
+
+        {/* Approximation (per eccesso) */}
+        {hasGrade && (
+          <text x={cx} y={cy + 20} textAnchor="middle" fill="#9ca3af" fontSize="14" fontWeight="600">
+            Arrotondato: {Math.ceil(grade)}
+          </text>
+        )}
 
         {/* Lode label */}
         {lode && hasGrade && (
-          <text x={cx} y={cy + 40} textAnchor="middle" fill="#f59e0b"
+          <text x={cx} y={cy + 45} textAnchor="middle" fill="#f59e0b"
             fontSize="14" fontWeight="700" letterSpacing="2">
             E LODE ✨
           </text>
