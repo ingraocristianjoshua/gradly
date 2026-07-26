@@ -35,6 +35,14 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
   const [degreeName, setDegreeName] = useState('');
   const [chosen, setChosen]       = useState<Set<number>>(new Set());
 
+  // Prevent background scrolling while modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   // Load universities on mount
   useEffect(() => {
     fetch('/api/universities/list')
