@@ -13,7 +13,7 @@ interface Props {
 
 export default function PointsSlider({ label, desc, value, min, max, step = 1, onChange, color }: Props) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3 py-2">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{label}</p>

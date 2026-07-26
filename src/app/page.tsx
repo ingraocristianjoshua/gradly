@@ -375,7 +375,7 @@ export default function Home() {
         />
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col gap-10">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-14">
 
         {/* ── Hero: grade arc ── */}
         <section className="flex flex-col items-center gap-6 animate-fade-in">
@@ -439,7 +439,7 @@ export default function Home() {
               </div>
               <form onSubmit={saveExam} className="flex flex-col gap-4">
                 {/* Settore 1: Nome */}
-                <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/50 dark:border-white/5 shadow-sm">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     1. Nome materia
                   </label>
@@ -482,7 +482,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 2: CFU */}
-                <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/50 dark:border-white/5 shadow-sm">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     2. Crediti (CFU)
                   </label>
@@ -499,7 +499,7 @@ export default function Home() {
                 </div>
 
                 {/* Settore 3: Voto */}
-                <div className="bg-white/40 dark:bg-black/20 p-5 rounded-2xl border border-white/50 dark:border-white/5 shadow-sm">
+                <div className="bg-white/70 dark:bg-white/5 p-5 rounded-[24px] shadow-sm border border-black/5 dark:border-white/5">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 block">
                     3. Voto in 30esimi
                   </label>
@@ -528,9 +528,9 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={examGrade === null || !examCfu || adding}
-                  className="w-full bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white font-semibold
-                    py-3.5 rounded-2xl shadow-lg hover:opacity-90 hover:scale-[1.01]
-                    disabled:opacity-40 disabled:scale-100 transition-all mt-2"
+                  className="w-full bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white font-bold text-[15px]
+                    py-4 rounded-[20px] shadow-lg hover:shadow-xl hover:-translate-y-0.5
+                    disabled:opacity-40 disabled:transform-none disabled:shadow-none transition-all duration-300 mt-2"
                 >
                   {adding ? 'Salvataggio…' : (editingId ? 'Salva Modifiche →' : 'Aggiungi Esame →')}
                 </button>
@@ -549,8 +549,8 @@ export default function Home() {
                   </h2>
                   <button
                     onClick={clearAll}
-                    className="text-xs font-semibold text-red-400 hover:text-red-600 px-3 py-1.5
-                      rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+                    className="text-xs font-bold text-red-500 hover:text-red-600 px-4 py-2
+                      rounded-full hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
                   >
                     Elimina tutti
                   </button>
@@ -560,11 +560,11 @@ export default function Home() {
                     <div
                       key={exam.id}
                       onClick={() => startEditing(exam)}
-                      className="flex items-center gap-3 p-3.5 rounded-2xl
-                        bg-white/50 dark:bg-white/5
-                        border border-white/60 dark:border-white/8
-                        hover:bg-white/70 dark:hover:bg-white/8
-                        transition-all group cursor-pointer"
+                      className="flex items-center gap-3 p-4 rounded-[20px]
+                        bg-white/70 dark:bg-white/5 shadow-sm
+                        border border-black/5 dark:border-white/5
+                        hover:bg-white dark:hover:bg-white/10 hover:shadow-md
+                        transition-all duration-300 group cursor-pointer"
                     >
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
@@ -614,11 +614,11 @@ export default function Home() {
                         <div
                           key={exam.id}
                           onClick={() => startEditing(exam)}
-                          className="flex items-center gap-3 p-3.5 rounded-2xl
-                            bg-white/30 dark:bg-black/10
-                            border border-white/40 dark:border-white/5
-                            opacity-70 hover:opacity-100
-                            transition-all group cursor-pointer"
+                          className="flex items-center gap-3 p-4 rounded-[20px]
+                            bg-white/40 dark:bg-black/10
+                            border border-black/5 dark:border-white/5
+                            opacity-60 hover:opacity-100 hover:bg-white/60 dark:hover:bg-white/10
+                            transition-all duration-300 group cursor-pointer"
                         >
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate line-through decoration-gray-400/50">

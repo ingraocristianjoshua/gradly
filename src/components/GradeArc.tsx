@@ -44,10 +44,13 @@ export default function GradeArc({
             <stop offset="0%" stopColor="#8a2387" />
             <stop offset="100%" stopColor={color} />
           </linearGradient>
-          <filter id="arcGlow">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+          <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feComponentTransfer in="blur" result="glow">
+              <feFuncA type="linear" slope="0.8" />
+            </feComponentTransfer>
             <feMerge>
-              <feMergeNode in="blur" />
+              <feMergeNode in="glow" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
