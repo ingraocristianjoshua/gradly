@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradly - Calcola il tuo voto di laurea</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="app-container">
+        <header class="glass-panel header">
+            <h1><i class="fa-solid fa-graduation-cap"></i> Gradly</h1>
+            <p>Calcola il tuo voto di partenza e la media universitaria</p>
+        </header>
+
+        <main class="grid-container">
+            <!-- Pannello Inserimento ed Esami -->
+            <section class="glass-panel exams-section">
+                <h2>I tuoi esami</h2>
+                <form id="exam-form" class="exam-form">
+                    <div class="input-group">
+                        <input type="text" id="exam-name" placeholder="Nome materia (opzionale)" autocomplete="off">
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="exam-grade">Voto</label>
+                            <select id="exam-grade" required>
+                                <option value="" disabled selected>Seleziona</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="input-group checkbox-group">
+                            <label for="exam-lode">Lode</label>
+                            <input type="checkbox" id="exam-lode">
+                        </div>
+                        <div class="input-group">
+                            <label for="exam-cfu">CFU</label>
+                            <input type="number" id="exam-cfu" min="1" max="100" required placeholder="es. 6">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Aggiungi Esame</button>
+                </form>
+
+                <div class="exams-list-container">
+                    <table class="exams-table">
+                        <thead>
+                            <tr>
+                                <th>Materia</th>
+                                <th>Voto</th>
+                                <th>CFU</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="exams-list">
+                            <!-- Esami caricati dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="right-column">
+                <!-- Pannello Medie -->
+                <section class="glass-panel averages-section">
+                    <h2>Riepilogo</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-label">Media Aritmetica</span>
+                            <span class="stat-value" id="media-aritmetica">0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Media Ponderata</span>
+                            <span class="stat-value highlight" id="media-ponderata">0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Voto Partenza</span>
+                            <span class="stat-value success" id="voto-partenza">0.00</span>
+                            <span class="stat-sub">/ 110</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Totale CFU</span>
+                            <span class="stat-value" id="totale-cfu">0</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pannello Tesi e Proiezione -->
+                <section class="glass-panel thesis-section">
+                    <h2>Voto Finale</h2>
+                    <div class="input-group">
+                        <label for="thesis-points">Punti previsti per la tesi</label>
+                        <div class="range-slider-container">
+                            <input type="range" id="thesis-points" min="0" max="15" value="0">
+                            <span id="thesis-points-display" class="points-badge">+0</span>
+                        </div>
+                    </div>
+                    <div class="final-grade-container">
+                        <h3>Proiezione Voto Finale</h3>
+                        <div class="final-grade-circle">
+                            <span id="voto-finale">0</span>
+                        </div>
+                        <p class="final-grade-sub">su 110</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <footer class="footer glass-panel">
+            <p><strong>Gradly</strong> - Il tuo calcolatore universitario personale</p>
+            <button id="reset-btn" class="btn-danger btn-small"><i class="fa-solid fa-trash"></i> Resetta tutto</button>
+        </footer>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
