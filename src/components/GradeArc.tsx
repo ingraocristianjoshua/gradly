@@ -94,14 +94,14 @@ export default function GradeArc({
 
         {/* Approximation (arrotondamento standard) */}
         {hasGrade && (
-          <text x={cx} y={cy + 20} textAnchor="middle" fill="#9ca3af" fontSize="14" fontWeight="600">
+          <text x={cx} y={cy + 28} textAnchor="middle" fill="#9ca3af" fontSize="14" fontWeight="600">
             Arrotondato: {Math.round(grade)}
           </text>
         )}
 
         {/* Lode label */}
         {lode && hasGrade && (
-          <text x={cx} y={cy + 45} textAnchor="middle" fill="#f59e0b"
+          <text x={cx} y={cy + 52} textAnchor="middle" fill="#f59e0b"
             fontSize="14" fontWeight="700" letterSpacing="2">
             E LODE ✨
           </text>
