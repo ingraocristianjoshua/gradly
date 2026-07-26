@@ -361,7 +361,7 @@ export default function Home() {
       {/* ── Animated Clean Background ── */}
       <div className="fixed inset-0 -z-20 bg-animated-gradient transition-colors duration-500" />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-14">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-20">
 
         {/* ── Hero: grade arc ── */}
         <section className="flex flex-col items-center gap-6 animate-fade-in">
@@ -490,7 +490,7 @@ export default function Home() {
                     3. Voto in 30esimi
                   </label>
                   <select
-                    value={examLode && examGrade === 30 ? '30L' : (examGrade || '')}
+                    value={examLode && examGrade === 30 ? '30L' : (examGrade !== null ? examGrade.toString() : '')}
                     onChange={(e) => {
                       const val = e.target.value;
                       if (val === '30L') {
@@ -504,6 +504,7 @@ export default function Home() {
                     className="w-full bg-black/5 dark:bg-white/10 rounded-[14px] px-4 py-2.5 text-[15px] font-medium text-gray-900 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#8a2387]/50 transition-all border border-transparent hover:bg-black/10 dark:hover:bg-white/20"
                   >
                     <option value="" disabled>Seleziona il voto</option>
+                    <option value="0">Idoneità (solo CFU)</option>
                     {Array.from({ length: 13 }, (_, i) => 18 + i).map(g => (
                       <option key={g} value={g}>{g}</option>
                     ))}
@@ -570,6 +571,8 @@ export default function Home() {
                               </span>
                             )}
                           </span>
+                        ) : exam.grade === 0 ? (
+                          <span className="text-sm font-extrabold text-[#0071e3] tracking-wide">IDONEO</span>
                         ) : (
                           <span className="text-xs text-gray-300 dark:text-gray-600 italic">—</span>
                         )}
@@ -617,6 +620,8 @@ export default function Home() {
                               <span className="text-base font-bold text-gray-400 dark:text-gray-500 line-through decoration-gray-400/50">
                                 {exam.grade}{exam.lode ? 'L' : ''}
                               </span>
+                            ) : exam.grade === 0 ? (
+                              <span className="text-sm font-bold text-gray-400 dark:text-gray-500 line-through decoration-gray-400/50">IDONEO</span>
                             ) : (
                               <span className="text-xs text-gray-300 dark:text-gray-600 italic">—</span>
                             )}
