@@ -172,7 +172,6 @@ export default function Home() {
   const [onTimeBonus, setOnTimeBonus] = useState(0);
   const [bonusRules, setBonusRules] = useState<BonusRule[]>([]);
   const [showImport, setShowImport] = useState(false);
-  const [showExclusionModal, setShowExclusionModal] = useState(false);
   const [dbReady, setDbReady]       = useState(false);
 
   // Bonus rule form state
@@ -836,39 +835,7 @@ export default function Home() {
         />
       )}
 
-      {showExclusionModal && (
-        <div className="modal-backdrop" onClick={() => setShowExclusionModal(false)}>
-          <div className="glass animate-scale-in w-full max-w-md rounded-3xl flex flex-col overflow-hidden max-h-[85vh] border border-black/5 dark:border-white/10" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-black/5 dark:border-white/5 bg-white/40 dark:bg-black/20 flex justify-between items-center">
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Materie Escluse</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Deseleziona le materie per escluderle dal calcolo della media.</p>
-              </div>
-              <button onClick={() => setShowExclusionModal(false)} className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center text-gray-500 transition-colors">✕</button>
-            </div>
-            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
-              {exams.map(ex => (
-                 <label key={ex.id} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${!ex.isExcluded ? 'bg-[#e94057]/10 dark:bg-[#e94057]/20 border-[#e94057]/20' : 'bg-white/40 dark:bg-white/5 border-transparent opacity-60'}`}>
-                    <input type="checkbox" className="accent-[#e94057] w-4 h-4" checked={!ex.isExcluded} onChange={(e) => {
-                       const next = [...exams];
-                       const idx = next.findIndex(x => x.id === ex.id);
-                       next[idx] = { ...next[idx], isExcluded: !e.target.checked };
-                       setExams(next);
-                    }}/>
-                    <span className={`flex-1 text-sm font-medium ${!ex.isExcluded ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500 line-through'}`}>{ex.name}</span>
-                    <span className="text-xs font-bold text-gray-500 bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-full">{ex.cfu} CFU</span>
-                 </label>
-              ))}
-              {exams.length === 0 && (
-                <p className="text-sm text-gray-400 text-center py-6">Nessun esame presente.</p>
-              )}
-            </div>
-            <div className="p-4 border-t border-black/5 dark:border-white/5 bg-white/40 dark:bg-black/20">
-              <button onClick={() => setShowExclusionModal(false)} className="w-full bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white py-3.5 rounded-xl font-bold shadow-lg hover:opacity-90 transition-opacity">Fatto</button>
-            </div>
-          </div>
-        </div>
-      )}
+
     </>
   );
 }
