@@ -18,6 +18,7 @@ export interface Exam {
   cfu: number;
   lode: boolean;
   isCore?: boolean;
+  isExcluded?: boolean;
 }
 
 export interface BonusRule {
@@ -46,26 +47,29 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
   
   exams.forEach((e) => { 
     totalCfu += e.cfu; 
-    if (e.isCore === false) {
+    if (e.isExcluded) {
       excludedCfu += e.cfu;
     }
   });
 
-  const countedGraded = exams.filter((e) => e.grade > 0 && e.isCore !== false);
+  const validExams = exams.filter((e) => e.grade > 0 && !e.isExcluded);
   
-  const sorted = [...countedGraded].sort((a, b) => {
+  const coreExams = validExams.filter(e => e.isCore !== false);
+  const nonCoreExams = validExams.filter(e => e.isCore === false);
+
+  nonCoreExams.sort((a, b) => {
     const aGrade = a.lode ? 30.1 : a.grade;
     const bGrade = b.lode ? 30.1 : b.grade;
     return aGrade - bGrade;
   });
 
   let remainingDrop = worstCfuToDrop;
-  let sumGrades = 0, sumWeighted = 0, gradedCfu = 0;
   let discardedCfu = 0;
-  let countedExams = 0;
   let droppedExams: Array<{name: string, cfuDropped: number, grade: number}> = [];
 
-  for (const e of sorted) {
+  let finalExamsToCount = [...coreExams];
+
+  for (const e of nonCoreExams) {
     let cfuToCount = e.cfu;
     
     if (remainingDrop > 0) {
@@ -77,12 +81,19 @@ function calcStats(exams: Exam[], worstCfuToDrop: number = 0, bonusRules: BonusR
     }
 
     if (cfuToCount > 0) {
-      const g = e.lode ? 30 : e.grade;
-      sumGrades += g;
-      countedExams += 1;
-      sumWeighted += g * cfuToCount;
-      gradedCfu += cfuToCount;
+      finalExamsToCount.push({ ...e, cfu: cfuToCount });
     }
+  }
+
+  let sumGrades = 0, sumWeighted = 0, gradedCfu = 0;
+  let countedExams = 0;
+
+  for (const e of finalExamsToCount) {
+    const g = e.lode ? 30 : e.grade;
+    sumGrades += g;
+    countedExams += 1;
+    sumWeighted += g * e.cfu;
+    gradedCfu += e.cfu;
   }
 
   const aritmetica = countedExams > 0 ? sumGrades / countedExams : 0;
@@ -769,14 +780,14 @@ export default function Home() {
             </div>
             <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
               {exams.map(ex => (
-                 <label key={ex.id} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${ex.isCore !== false ? 'bg-[#e94057]/10 dark:bg-[#e94057]/20 border-[#e94057]/20' : 'bg-white/40 dark:bg-white/5 border-transparent opacity-60'}`}>
-                    <input type="checkbox" className="accent-[#e94057] w-4 h-4" checked={ex.isCore !== false} onChange={(e) => {
+                 <label key={ex.id} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${!ex.isExcluded ? 'bg-[#e94057]/10 dark:bg-[#e94057]/20 border-[#e94057]/20' : 'bg-white/40 dark:bg-white/5 border-transparent opacity-60'}`}>
+                    <input type="checkbox" className="accent-[#e94057] w-4 h-4" checked={!ex.isExcluded} onChange={(e) => {
                        const next = [...exams];
                        const idx = next.findIndex(x => x.id === ex.id);
-                       next[idx] = { ...next[idx], isCore: e.target.checked };
+                       next[idx] = { ...next[idx], isExcluded: !e.target.checked };
                        setExams(next);
                     }}/>
-                    <span className={`flex-1 text-sm font-medium ${ex.isCore !== false ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500 line-through'}`}>{ex.name}</span>
+                    <span className={`flex-1 text-sm font-medium ${!ex.isExcluded ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500 line-through'}`}>{ex.name}</span>
                     <span className="text-xs font-bold text-gray-500 bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-full">{ex.cfu} CFU</span>
                  </label>
               ))}
