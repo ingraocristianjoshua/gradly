@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'About – Gradly' };
+export const metadata: Metadata = { title: 'About – Graduam' };
 
 export default function About() {
   return (
@@ -26,7 +26,7 @@ export default function About() {
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
-            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Gradly</span>
+            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Graduam</span>
           </Link>
           <span className="text-gray-300 dark:text-gray-700">/</span>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">About</span>
@@ -46,16 +46,16 @@ export default function About() {
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Gradly</h1>
+              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Graduam</h1>
               <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">Il calcolatore universitario più elegante d'Italia</p>
             </div>
           </div>
           <div className="flex flex-col gap-5 text-gray-600 dark:text-gray-300 text-base leading-relaxed">
             <p>
-              <strong className="text-gray-900 dark:text-white">Gradly</strong> è uno strumento gratuito che aiuta gli studenti universitari italiani a calcolare la propria <strong>media ponderata</strong> e a stimare il <strong>voto finale di laurea</strong>.
+              <strong className="text-gray-900 dark:text-white">Graduam</strong> è uno strumento gratuito che aiuta gli studenti universitari italiani a calcolare la propria <strong>media ponderata</strong> e a stimare il <strong>voto finale di laurea</strong>.
             </p>
             <p>
-              Progettato con un'incredibile cura per i dettagli, Gradly combina semplicità e potenza: puoi inserire i tuoi esami manualmente oppure importare il piano di studi direttamente dal portale della tua università — al momento supportiamo <strong>UniPa</strong> (Università degli Studi di Palermo).
+              Progettato con un'incredibile cura per i dettagli, Graduam combina semplicità e potenza: puoi inserire i tuoi esami manualmente oppure importare il piano di studi direttamente dal portale della tua università — al momento supportiamo <strong>UniPa</strong> (Università degli Studi di Palermo).
             </p>
             <p>
               I tuoi dati vengono salvati in modo sicuro su un database PostgreSQL associato alla tua sessione anonima — nessun account richiesto, nessun dato personale raccolto.

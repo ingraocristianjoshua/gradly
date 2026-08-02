@@ -12,7 +12,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const cookieStore = await cookies();
-    const sessionId = cookieStore.get('gradly_session')?.value;
+    const sessionId = cookieStore.get('graduam_session')?.value;
 
     if (!sessionId) {
       return NextResponse.json({ error: 'Sessione non trovata' }, { status: 401 });

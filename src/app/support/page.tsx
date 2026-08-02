@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Support – Gradly' };
+export const metadata: Metadata = { title: 'Support – Graduam' };
 
 function FAQ({ q, a }: { q: string; a: string }) {
   return (
@@ -35,7 +35,7 @@ export default function Support() {
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
-            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Gradly</span>
+            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Graduam</span>
           </Link>
           <span className="text-gray-300 dark:text-gray-700">/</span>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Support</span>
@@ -45,7 +45,7 @@ export default function Support() {
         <div className="glass rounded-[36px] p-6 sm:p-10 flex flex-col gap-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Supporto</h1>
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-            Hai domande su come funziona Gradly? Ecco le risposte alle domande più frequenti. Per qualsiasi altra richiesta, puoi contattarci via email.
+            Hai domande su come funziona Graduam? Ecco le risposte alle domande più frequenti. Per qualsiasi altra richiesta, puoi contattarci via email.
           </p>
           <div className="flex flex-col gap-3">
             <FAQ q="Come viene calcolata la media ponderata?"
@@ -56,15 +56,15 @@ export default function Support() {
               a="Clicca su 'Importa Materie', cerca il tuo corso di laurea, seleziona il curriculum e scegli le materie da importare. Vengono importate solo le materie con valutazione in trentesimi." />
             <FAQ q="I miei dati vengono salvati?"
               a="Sì. I tuoi esami vengono salvati su database PostgreSQL tramite una sessione anonima nel tuo browser (cookie). Non servono account o dati personali." />
-            <FAQ q="Posso usare Gradly per qualsiasi università italiana?"
+            <FAQ q="Posso usare Graduam per qualsiasi università italiana?"
               a="Al momento l'importazione automatica è disponibile solo per UniPa. Puoi comunque inserire manualmente gli esami di qualsiasi università." />
             <FAQ q="Il calcolatore è gratuito?"
-              a="Sì, Gradly è completamente gratuito e senza pubblicità." />
+              a="Sì, Graduam è completamente gratuito e senza pubblicità." />
           </div>
           <div className="bg-gradient-to-br from-[#8a2387]/10 to-[#e94057]/10 dark:from-[#8a2387]/20 dark:to-[#e94057]/20 rounded-2xl p-5 border border-[#e94057]/10">
             <p className="font-bold text-gray-900 dark:text-white mb-1">Hai altri problemi?</p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Scrivici e risponderemo entro 24 ore.</p>
-            <a href="mailto:support@gradly.app" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white font-semibold text-sm px-5 py-2.5 rounded-full shadow hover:opacity-90 transition-all">
+            <a href="mailto:support@graduam.app" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white font-semibold text-sm px-5 py-2.5 rounded-full shadow hover:opacity-90 transition-all">
               📧 Contattaci
             </a>
           </div>

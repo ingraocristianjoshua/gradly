@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Privacy Policy – Gradly' };
+export const metadata: Metadata = { title: 'Privacy Policy – Graduam' };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -35,7 +35,7 @@ export default function Privacy() {
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
-            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Gradly</span>
+            <span className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent">Graduam</span>
           </Link>
           <span className="text-gray-300 dark:text-gray-700">/</span>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Privacy Policy</span>
@@ -49,11 +49,11 @@ export default function Privacy() {
           </div>
           <div className="flex flex-col gap-6 divide-y divide-black/5 dark:divide-white/5">
             <Section title="1. Introduzione">
-              Gradly è un calcolatore universitario che rispetta la tua privacy. Questa pagina descrive in modo chiaro e trasparente quali dati raccogliamo e come li utilizziamo.
+              Graduam è un calcolatore universitario che rispetta la tua privacy. Questa pagina descrive in modo chiaro e trasparente quali dati raccogliamo e come li utilizziamo.
             </Section>
             <div className="pt-6">
               <Section title="2. Dati raccolti">
-                <p className="mb-2">Gradly raccoglie esclusivamente:</p>
+                <p className="mb-2">Graduam raccoglie esclusivamente:</p>
                 <ul className="list-disc list-inside space-y-1 ml-1">
                   <li><strong className="text-gray-700 dark:text-gray-300">Dati degli esami</strong>: nome, voto, CFU da te inseriti</li>
                   <li><strong className="text-gray-700 dark:text-gray-300">Impostazioni</strong>: punti tesi e commissione</li>
@@ -63,7 +63,7 @@ export default function Privacy() {
             </div>
             <div className="pt-6">
               <Section title="3. Dati NON raccolti">
-                Gradly <strong className="text-gray-700 dark:text-gray-300">non raccoglie</strong> nome, cognome, email, numero di matricola, indirizzo IP, dati di geolocalizzazione, dati comportamentali o di tracciamento pubblicitario.
+                Graduam <strong className="text-gray-700 dark:text-gray-300">non raccoglie</strong> nome, cognome, email, numero di matricola, indirizzo IP, dati di geolocalizzazione, dati comportamentali o di tracciamento pubblicitario.
               </Section>
             </div>
             <div className="pt-6">
@@ -84,7 +84,7 @@ export default function Privacy() {
             <div className="pt-6">
               <Section title="7. Contatti">
                 Per qualsiasi domanda sulla privacy, scrivi a{' '}
-                <a href="mailto:privacy@gradly.app" className="text-[#e94057] font-medium hover:underline">privacy@gradly.app</a>.
+                <a href="mailto:privacy@graduam.app" className="text-[#e94057] font-medium hover:underline">privacy@graduam.app</a>.
               </Section>
             </div>
           </div>

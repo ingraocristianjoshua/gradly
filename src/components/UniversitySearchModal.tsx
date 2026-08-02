@@ -17,7 +17,7 @@ interface Props {
   onImport: (exams: { name: string; cfu: number }[]) => void;
 }
 
-type Step = 'select_uni' | 'search' | 'curricula' | 'preview';
+type Step = 'select_uni' | 'search' | 'curricula' | 'preview' | 'paste_text';
 
 export default function UniversitySearchModal({ onClose, onImport }: Props) {
   const [step, setStep] = useState<Step>('select_uni');
@@ -34,6 +34,8 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
   const [lectures, setLectures]   = useState<{ name: string; cfu: number }[]>([]);
   const [degreeName, setDegreeName] = useState('');
   const [chosen, setChosen]       = useState<Set<number>>(new Set());
+  const [pastedText, setPastedText] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
 
   // Prevent background scrolling while modal is open
   useEffect(() => {
@@ -78,6 +80,11 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
   }, []);
 
   const handleSelectUni = (uni: University) => {
+    if (uni.id === 'ai_text') {
+      setSelectedUni(uni);
+      setStep('paste_text');
+      return;
+    }
     setSelectedUni(uni);
     searchCourses(uni.id, year, '');
   };
@@ -98,6 +105,31 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
       setError('Errore nel recupero del piano di studi.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAiExtract = async () => {
+    if (!pastedText.trim()) return;
+    setAiLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/import/text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: pastedText }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || data.details || 'Errore durante l\'estrazione');
+      }
+      setLectures(data.exams ?? []);
+      setDegreeName('Piano di Studi (AI)');
+      setChosen(new Set((data.exams || []).map((_: unknown, i: number) => i)));
+      setStep('preview');
+    } catch (err: any) {
+      setError(err.message || 'Errore nel parsing del testo con AI.');
+    } finally {
+      setAiLoading(false);
     }
   };
 
@@ -130,6 +162,17 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
             <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Importa piano di studi</h2>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                {step === 'select_uni' && 'Seleziona il tuo ateneo'}
+                {step === 'paste_text' && 'Incolla testo'}
+                {step === 'search' && 'Cerca corso'}
+                {step === 'curricula' && 'Scegli curriculum'}
+                {step === 'preview' && 'Rivedi e importa'}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
             {step === 'preview' && (
               <button
                 onClick={() => setStep('search')}
@@ -173,6 +216,13 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
                       <span className="font-bold text-gray-900 dark:text-white">{uni.name}</span>
                     </button>
                   ))}
+                  <button
+                    onClick={() => handleSelectUni({ id: 'ai_text', name: 'Incolla Testo' })}
+                    className="flex flex-col text-left p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-100 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-400 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-2xl mb-2 grayscale group-hover:grayscale-0 transition-all">✨</span>
+                    <span className="font-bold text-indigo-900 dark:text-indigo-200">Qualsiasi Università (Testo)</span>
+                  </button>
                   <div className="flex flex-col text-left p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-dashed border-black/10 dark:border-white/10 opacity-60">
                     <span className="text-2xl mb-2 grayscale">🚧</span>
                     <span className="font-bold text-gray-600 dark:text-gray-400">Altre in arrivo...</span>
@@ -182,7 +232,41 @@ export default function UniversitySearchModal({ onClose, onImport }: Props) {
             </div>
           )}
 
-          {step !== 'preview' && step !== 'select_uni' && step !== 'curricula' && (
+          {step === 'paste_text' && (
+            <div className="flex flex-col h-full gap-4 animate-fade-in">
+              <div className="flex items-center gap-2">
+                <button onClick={() => setStep('select_uni')} className="bg-white/80 dark:bg-[#27272a] border border-black/8 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 dark:text-white hover:bg-white dark:hover:bg-white/20 transition-all">
+                  ←
+                </button>
+                <h3 className="font-bold text-gray-900 dark:text-white text-lg">Incolla il piano di studi</h3>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Vai sul portale della tua università, fai un copia-incolla del tuo libretto o piano di studi (anche disordinato) e incollalo qui sotto. L&apos;Intelligenza Artificiale farà il resto.
+              </p>
+              <textarea
+                value={pastedText}
+                onChange={e => setPastedText(e.target.value)}
+                placeholder="Es: Analisi Matematica 1 - 12 CFU&#10;Informatica - 8 CFU..."
+                className="flex-1 w-full p-4 bg-white/80 dark:bg-white/5 border border-black/8 dark:border-white/10 rounded-2xl text-sm font-medium text-gray-900 dark:text-white outline-none focus:border-[#e94057] focus:ring-4 focus:ring-[#e94057]/15 transition-all resize-none"
+              />
+              <button
+                onClick={handleAiExtract}
+                disabled={aiLoading || !pastedText.trim()}
+                className="w-full bg-gradient-to-r from-[#8a2387] to-[#e94057] text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {aiLoading ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Analisi in corso...
+                  </>
+                ) : (
+                  <>✨ Estrai Materie con AI</>
+                )}
+              </button>
+            </div>
+          )}
+
+          {step !== 'preview' && step !== 'select_uni' && step !== 'curricula' && step !== 'paste_text' && (
             <>
               {/* Search bar */}
               <div className="flex gap-2">

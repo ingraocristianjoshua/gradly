@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Gradly – Calcola il tuo voto di laurea",
+  metadataBase: new URL("https://graduam.it"),
+  title: "Graduam – Calcola il tuo voto di laurea",
   description:
-    "Gradly è il calcolatore universitario più elegante per la media ponderata e il voto finale di laurea.",
+    "Graduam è il calcolatore universitario più elegante per la media ponderata e il voto finale di laurea.",
   keywords: "voto laurea, media ponderata, calcolo media università, UniPa",
 };
 

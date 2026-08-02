@@ -219,16 +219,16 @@ export default function Home() {
         setWorstCfu(s.worstCfu || 0);
       }
     } catch {
-      const e = localStorage.getItem('gradly_exams');
+      const e = localStorage.getItem('graduam_exams');
       if (e) setExams(JSON.parse(e));
-      setThesis(parseInt(localStorage.getItem('gradly_thesis') || '0'));
-      setWorstCfu(parseInt(localStorage.getItem('gradly_worst_cfu') || '0'));
-      setLodeBonus(parseFloat(localStorage.getItem('gradly_lode_bonus') || '0.5'));
-      setOnTimeBonus(parseFloat(localStorage.getItem('gradly_on_time_bonus') || '0'));
+      setThesis(parseInt(localStorage.getItem('graduam_thesis') || '0'));
+      setWorstCfu(parseInt(localStorage.getItem('graduam_worst_cfu') || '0'));
+      setLodeBonus(parseFloat(localStorage.getItem('graduam_lode_bonus') || '0.5'));
+      setOnTimeBonus(parseFloat(localStorage.getItem('graduam_on_time_bonus') || '0'));
     } finally {
       // Always load bonus rules from local storage since it's not in the DB schema yet
       try {
-        const b = localStorage.getItem('gradly_bonus_rules');
+        const b = localStorage.getItem('graduam_bonus_rules');
         if (b) setBonusRules(JSON.parse(b));
       } catch {}
       setDbReady(true);
@@ -242,11 +242,11 @@ export default function Home() {
     if (!dbReady) return;
     const id = setTimeout(() => {
       // Always save everything to localStorage
-      localStorage.setItem('gradly_thesis',     thesisPoints.toString());
-      localStorage.setItem('gradly_worst_cfu',  worstCfu.toString());
-      localStorage.setItem('gradly_lode_bonus', lodeBonus.toString());
-      localStorage.setItem('gradly_on_time_bonus', onTimeBonus.toString());
-      localStorage.setItem('gradly_bonus_rules', JSON.stringify(bonusRules));
+      localStorage.setItem('graduam_thesis',     thesisPoints.toString());
+      localStorage.setItem('graduam_worst_cfu',  worstCfu.toString());
+      localStorage.setItem('graduam_lode_bonus', lodeBonus.toString());
+      localStorage.setItem('graduam_on_time_bonus', onTimeBonus.toString());
+      localStorage.setItem('graduam_bonus_rules', JSON.stringify(bonusRules));
       
       // Optionally sync supported fields to DB
       fetch('/api/settings', {
@@ -263,7 +263,7 @@ export default function Home() {
   // ── Persist exams to local storage ──
   useEffect(() => {
     if (dbReady) {
-      localStorage.setItem('gradly_exams', JSON.stringify(exams));
+      localStorage.setItem('graduam_exams', JSON.stringify(exams));
     }
   }, [exams, dbReady]);
 
@@ -766,7 +766,7 @@ export default function Home() {
               <div>
                 <PointsSlider
                   label="Limite CFU scartabili"
-                  desc="Gradly calcolerà in automatico quanti e quali scartare"
+                  desc="Graduam calcolerà in automatico quanti e quali scartare"
                   value={worstCfu} min={0} max={30}
                   onChange={setWorstCfu}
                   color="#f27121"
@@ -813,7 +813,7 @@ export default function Home() {
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
-            <span className="font-semibold text-lg text-gray-500 dark:text-gray-400">Gradly</span>
+            <span className="font-semibold text-lg text-gray-500 dark:text-gray-400">Graduam</span>
           </div>
           <div className="flex gap-5">
             {[['About', '/about'], ['Support', '/support'], ['Privacy', '/privacy']].map(([l, h]) => (
@@ -822,7 +822,7 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          <span>© {new Date().getFullYear()} Gradly</span>
+          <span>© {new Date().getFullYear()} Graduam</span>
         </div>
       </footer>
 

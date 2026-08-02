@@ -60,7 +60,7 @@ export default function Navbar({ onImport }: NavbarProps) {
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
             <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-[#8a2387] to-[#e94057] bg-clip-text text-transparent pb-0.5 group-hover:opacity-80 transition-opacity duration-300">
-              Gradly
+              Graduam
             </span>
           </a>
 

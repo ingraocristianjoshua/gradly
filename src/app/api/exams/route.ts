@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 // Helper: get or create session
 async function getOrCreateSession(): Promise<string> {
   const cookieStore = await cookies();
-  const sessionId = cookieStore.get('gradly_session')?.value;
+  const sessionId = cookieStore.get('graduam_session')?.value;
 
   if (sessionId) {
     const existing = await db.query.sessions.findFirst({
@@ -31,7 +31,7 @@ export async function GET() {
     });
 
     const response = NextResponse.json(rows);
-    response.cookies.set('gradly_session', sessionId, {
+    response.cookies.set('graduam_session', sessionId, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 365, // 1 year
       path: '/',
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
       .returning();
 
     const response = NextResponse.json(newExam, { status: 201 });
-    response.cookies.set('gradly_session', sessionId, {
+    response.cookies.set('graduam_session', sessionId, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 365,
       path: '/',
